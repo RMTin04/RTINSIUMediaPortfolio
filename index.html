@@ -46,7 +46,9 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    background-color:var(--accent);
+    background-color:rgba(151,100,205,.72);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
     padding:22px clamp(20px, 5vw, 56px);
     z-index:100;
   }
@@ -255,6 +257,9 @@
     column-count:3;
     column-gap:20px;
   }
+  #design-grid-future{
+    column-count:1;
+  }
   .piece{
     position:relative;
     break-inside:avoid;
@@ -339,7 +344,7 @@
 
     <section id="hero">
     <div class="hero-content">
-      <img class="hero-logo" src="images/school-logo.jpg" alt="SIU School of Medicine logo" data-base="school-logo"
+      <img class="hero-logo" src="images/edited-photo.jpg" alt="SIU School of Medicine logo" data-base="school-logo"
            onerror="tryNextExtension(this, this.dataset.base)">
       <div class="eyebrow">Candidate for Communications &amp; Media Representative</div>
       <h1>Hello Class of 2030!</h1>
@@ -352,7 +357,7 @@
   <section id="about">
     <div class="statement">
       <h2 style="margin-bottom:24px;">About Me</h2>
-      <p>Hi guys! My name is Rachel Tin. I'm a fellow M1 who's spent countless hours behind a camera and design/editing softwares. I've worked as both a photographer and a graphic designer for various campus orgs during undergrad. I understand how branding and social media can elevate our class's presence and how important representing our image is to our futures.</p>
+      <p>Hi guys! My name is Rachel Tin. I'm a fellow M1 who's spent countless hours behind a camera and on design/editing softwares. I've worked as both a photographer and a graphic designer for various campus orgs during undergrad. I understand how branding and social media can elevate our class's presence and how important representing our image is to our futures.</p>
       <p>As Communications &amp; Media Representative, I'd bring that experience to our class's socials, event graphics, and other forms of media.</p>
       <p style="font-size:12px"> <br>I also have a lot of screentime doomscrolling tiktok and ig so if we want to, we can keep up with the trends :D. </p>
     </div>
@@ -420,7 +425,7 @@
     const tries = parseInt(img.dataset.tries || '0', 10);
     if (tries < EXTENSIONS.length){
       img.dataset.tries = tries + 1;
-      img.src = `images/${base}.${EXTENSIONS[tries]}`;
+      img.src = `images/${base}.${EXTENSIONS[tries]}?v=${CACHE_BUST}`;
     } else {
       img.style.display = 'none';
       if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
@@ -457,7 +462,7 @@
       <span class="frame-index">${num}</span>
     `;
     sheet.appendChild(frame);
-    frame.querySelector('img').src = `images/${base}.${EXTENSIONS[0]}`;
+    frame.querySelector('img').src = `images/${base}.${EXTENSIONS[0]}?v=${CACHE_BUST}`;
   });
 
   // ---- Design grids ----
@@ -469,7 +474,7 @@
   ];
   const designFuture = [
     { file: 'idea-01.jpg', title: 'LinkedIn Banner Design' },
-    { file: 'idea-02.jpg', title: 'Merch concept' },
+    { file: 'idea-02.jpg', title: 'Merch Ideas' },
     { file: 'idea-03.jpg', title: 'Alternative Banner Design' },
   ];
 
@@ -489,7 +494,7 @@
         <figcaption>${p.title}</figcaption>
       `;
       grid.appendChild(fig);
-      fig.querySelector('img').src = `images/${base}.${EXTENSIONS[0]}`;
+      fig.querySelector('img').src = `images/${base}.${EXTENSIONS[0]}?v=${CACHE_BUST}`;
     });
   }
   renderDesignGrid('design-grid-previous', designPrevious);
