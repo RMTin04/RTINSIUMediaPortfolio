@@ -352,6 +352,23 @@
   </section>
 
 <script>
+
+    // ---- Image loading with extension fallback ----
+  // Tries a few common extensions/cases per file so exact capitalization doesn't matter.
+  // Note: iPhone photos often save as .HEIC, which browsers can't display — convert
+  // those to .jpg first (e.g. Preview > Export on Mac, or any free HEIC-to-JPG converter).
+  const EXTENSIONS = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp'];
+  function tryNextExtension(img, base){
+    const tries = parseInt(img.dataset.tries || '0', 10);
+    if (tries < EXTENSIONS.length){
+      img.dataset.tries = tries + 1;
+      img.src = `images/${base}.${EXTENSIONS[tries]}`;
+    } else {
+      img.style.display = 'none';
+      img.nextElementSibling.style.display = 'flex';
+    }
+  }
+ 
   // ---- Photography contact sheet ----
   const PHOTO_COUNT = 8;
   const sheet = document.getElementById('photo-sheet');
@@ -376,7 +393,7 @@
     { file: 'design-02.jpg', title: 'Instagram set' },
     { file: 'design-03.jpg', title: 'Logo concept' },
     { file: 'design-04.jpg', title: 'Yearbook spread' },
-    { file: 'design-05.jpg', title: 'Merch design' },
+    { file: 'design-05.jpg', title: 'Merch concepts' },
     { file: 'design-06.jpg', title: 'Newsletter layout' },
   ];
   const grid = document.getElementById('design-grid');
