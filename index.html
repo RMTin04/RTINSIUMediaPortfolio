@@ -217,6 +217,15 @@
   }
 
   /* ---------- Design: editorial grid ---------- */
+  .design-sub + .design-sub{ margin-top:72px; }
+  .design-sub h3{
+    font-size:22px;
+    font-weight:500;
+    color:var(--ink);
+    margin-bottom:28px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
   .design-grid{
     column-count:3;
     column-gap:20px;
@@ -304,9 +313,9 @@
   </header>
 
   <section id="hero">
-    <div class="eyebrow">Candidate for Communications & Media Representative</div>
+    <div class="eyebrow">Candidate for Communications &amp; Media Representative</div>
     <h1>Hello Class of 2030!</h1>
-    <h2>Rachel Tin<br>Communications & Media Representative Candidate</h2>
+    <h2>Rachel Tin<br>Communications &amp; Media Representative Candidate</h2>
     <p class="tagline">Photography, graphic design, and a belief that our class deserves media that represents us well.</p>
     <div class="scroll-cue">Scroll ↓</div>
   </section>
@@ -315,18 +324,19 @@
     <div class="statement">
       <h2 style="margin-bottom:24px;">About Me</h2>
       <p>Hi guys! My name is Rachel Tin. I'm a fellow M1 who's spent countless hours behind a camera and design/editing softwares. I've worked as both a photographer and a graphic designer for various campus orgs and events during undergrad. I understand how branding and social media can elevate our class's presence and how important representing our image is to our futures.</p>
-      <p>As Communications & Media Representative, I'd bring that experience to our class's socials, event graphics, and other forms of media — consistent, considered, and interesting to look at.</p>
+      <p>As Communications &amp; Media Representative, I'd bring that experience to our class's socials, event graphics, and other forms of media — consistent, considered, and interesting to look at.</p>
       <p style="font-size:16px"> <br>I also have a lot of screentime doomscrolling tiktok and ig so if we want to, we can keep up with the trends :D. </p>
     </div>
     <div class="portrait">
-      <img src="images/portrait.jpg" alt="Portrait of Rachel" onerror="this.style.display='none'">
+      <img src="images/portrait.jpg" alt="Portrait of Rachel" data-base="portrait" onerror="tryNextExtension(this, this.dataset.base)">
+      <div class="placeholder-label">Replace with images/portrait.jpg</div>
     </div>
   </section>
 
   <section id="photography">
     <div class="section-head">
       <h2>Photography</h2>
-      <div class="count">Contact sheet, 01–08</div>
+      <div class="count" id="photo-count">Contact sheet, 01–08</div>
     </div>
     <p style="margin-top:8px; max-width:48ch;">A few examples of my graduation photography work.</p>
     <div class="sheet" id="photo-sheet"></div>
@@ -340,12 +350,12 @@
 
     <p style="margin-bottom:32px; max-width:48ch;">A few examples of my work in graphic design, including event posters, social media graphics, and other class-related media.</p>
 
- 
+
     <div class="design-sub">
       <h3>Previous Work</h3>
       <div class="design-grid" id="design-grid-previous"></div>
     </div>
- 
+
     <div class="design-sub">
       <h3>Future Ideas</h3>
       <div class="design-grid" id="design-grid-future"></div>
@@ -358,17 +368,22 @@
       <div class="contact-links">
         <a href="mailto:rtin91@siumed.edu">rtin91@siumed.edu</a>
       </div>
-      <div class="footer-note">Rachel — M1, SIU School of Medicine. Built for the Communications & Media Representative.</div>
+      <div class="footer-note">Rachel — M1, SIU School of Medicine. Built for the Communications &amp; Media Representative.</div>
     </div>
   </section>
 
 <script>
 
-    // ---- Image loading with extension fallback ----
+  // ---- Image loading with extension fallback ----
   // Tries a few common extensions/cases per file so exact capitalization doesn't matter.
+  // Works whether you type an extension in the list below or not — it's stripped
+  // automatically before the fallback list is tried.
   // Note: iPhone photos often save as .HEIC, which browsers can't display — convert
   // those to .jpg first (e.g. Preview > Export on Mac, or any free HEIC-to-JPG converter).
   const EXTENSIONS = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp'];
+  function stripExt(filename){
+    return filename.replace(/\.[a-zA-Z0-9]+$/, '');
+  }
   function tryNextExtension(img, base){
     const tries = parseInt(img.dataset.tries || '0', 10);
     if (tries < EXTENSIONS.length){
@@ -376,10 +391,10 @@
       img.src = `images/${base}.${EXTENSIONS[tries]}`;
     } else {
       img.style.display = 'none';
-      img.nextElementSibling.style.display = 'flex';
+      if (img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
     }
   }
- 
+
   // ---- Photography contact sheet ----
   const photos = [
     { file: 'photo-01.jpg' },
@@ -392,26 +407,28 @@
     { file: 'photo-08.jpg' },
   ];
   const sheet = document.getElementById('photo-sheet');
-  document.getElementById('photo-count').textContent =
-    `Contact sheet, 01–${String(photos.length).padStart(2, '0')}`;
+  const photoCountEl = document.getElementById('photo-count');
+  if (photoCountEl){
+    photoCountEl.textContent = `Contact sheet, 01–${String(photos.length).padStart(2, '0')}`;
+  }
   photos.forEach((p, i) => {
     const num = String(i + 1).padStart(2, '0');
+    const base = stripExt(p.file);
     const frame = document.createElement('div');
     frame.className = 'frame';
     frame.innerHTML = `
-      <img alt="Photograph ${num}" loading="lazy" data-base="${p.file}"
+      <img alt="Photograph ${num}" loading="lazy" data-base="${base}"
            onerror="tryNextExtension(this, this.dataset.base)">
       <div class="placeholder-label" style="display:none; align-items:center; justify-content:center;">
-        images/${p.file}.jpg
+        images/${base}.jpg
       </div>
       <span class="frame-index">${num}</span>
     `;
     sheet.appendChild(frame);
-    frame.querySelector('img').src = `images/${p.file}.${EXTENSIONS[0]}`;
+    frame.querySelector('img').src = `images/${base}.${EXTENSIONS[0]}`;
   });
 
   // ---- Design grids ----
-  // Edit either list to add/remove/relabel pieces — each keeps its own natural size.
   const designPrevious = [
     { file: 'design-01.jpg', title: 'Event poster' },
     { file: 'design-02.jpg', title: 'Instagram set' },
@@ -423,22 +440,24 @@
     { file: 'idea-02.jpg', title: 'Merch concept' },
     { file: 'idea-03.jpg', title: 'Alternative Banner Design' },
   ];
- 
+
   function renderDesignGrid(containerId, pieces){
     const grid = document.getElementById(containerId);
+    if (!grid) return;
     pieces.forEach(p => {
+      const base = stripExt(p.file);
       const fig = document.createElement('figure');
       fig.className = 'piece';
       fig.innerHTML = `
-        <img alt="${p.title}" loading="lazy" data-base="${p.file}"
+        <img alt="${p.title}" loading="lazy" data-base="${base}"
              onerror="tryNextExtension(this, this.dataset.base)">
         <div class="placeholder-label" style="display:none; align-items:center; justify-content:center;">
-          images/${p.file}.jpg
+          images/${base}.jpg
         </div>
         <figcaption>${p.title}</figcaption>
       `;
       grid.appendChild(fig);
-      fig.querySelector('img').src = `images/${p.file}.${EXTENSIONS[0]}`;
+      fig.querySelector('img').src = `images/${base}.${EXTENSIONS[0]}`;
     });
   }
   renderDesignGrid('design-grid-previous', designPrevious);
