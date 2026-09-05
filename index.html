@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rachel — Photography &amp; Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEAE3;
+    --paper-2:#E4E0D6;
+    --ink:#221F1A;
+    --accent:#B03A2E;
+    --grey:#8A8578;
+    --line:#D3CDBF;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    margin:0;
+  }
+  a{ color:inherit; }
+  img{ display:block; max-width:100%; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px clamp(20px, 5vw, 56px);
+    z-index:100;
+    mix-blend-mode:difference;
+  }
+  .nav a, .nav .mark{ color:var(--paper); }
+  .nav .mark{
+    font-family:'Fraunces', serif;
+    font-size:18px;
+    text-decoration:none;
+  }
+  .nav ul{
+    list-style:none;
+    display:flex;
+    gap:28px;
+    margin:0; padding:0;
+  }
+  .nav a{
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:.02em;
+  }
+  @media (max-width:640px){
+    .nav ul{ gap:16px; }
+    .nav a{ font-size:12px; }
+  }
+
+  section{
+    padding:120px clamp(20px, 5vw, 56px);
+    border-bottom:1px solid var(--line);
+  }
+
+  /* ---------- Hero ---------- */
+  #hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-top:80px;
+    padding-bottom:80px;
+    opacity:0;
+    transform:translateY(14px);
+    animation:reveal .9s ease-out .15s forwards;
+  }
+  @keyframes reveal{
+    to{ opacity:1; transform:translateY(0); }
+  }
+  #hero .eyebrow{
+    color:var(--accent);
+    font-size:15px;
+    margin-bottom:18px;
+  }
+  #hero h1{
+    font-size:clamp(52px, 11vw, 128px);
+    line-height:0.95;
+    letter-spacing:-0.01em;
+  }
+  #hero .tagline{
+    margin-top:28px;
+    max-width:520px;
+    font-size:18px;
+    line-height:1.6;
+    color:#4a4640;
+  }
+  #hero .scroll-cue{
+    margin-top:64px;
+    font-size:13px;
+    color:var(--grey);
+  }
+
+  /* ---------- About ---------- */
+  #about{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+    align-items:center;
+  }
+  #about .statement p{
+    font-size:19px;
+    line-height:1.75;
+    max-width:46ch;
+  }
+  #about .statement p + p{ margin-top:20px; }
+  #about .portrait{
+    aspect-ratio:4/5;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+  #about .portrait img{ width:100%; height:100%; object-fit:cover; }
+  .placeholder-label{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+    font-size:13px;
+    color:var(--grey);
+    pointer-events:none;
+  }
+  @media (max-width:800px){
+    #about{ grid-template-columns:1fr; }
+    #about .portrait{ order:-1; }
+  }
+
+  /* ---------- Section headers ---------- */
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:56px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .section-head h2{ font-size:clamp(32px, 5vw, 48px); }
+  .section-head .count{
+    font-size:14px;
+    color:var(--grey);
+  }
+
+  /* ---------- Photography: contact sheet ---------- */
+  #photography{ background:var(--paper-2); }
+  .sheet{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:2px;
+    background:var(--ink);
+    border:2px solid var(--ink);
+  }
+  .frame{
+    position:relative;
+    aspect-ratio:3/2;
+    background:#d8d3c6;
+    overflow:hidden;
+  }
+  .frame img{
+    width:100%; height:100%;
+    object-fit:cover;
+  }
+  .frame .frame-index{
+    position:absolute;
+    bottom:8px; left:10px;
+    font-size:11px;
+    color:var(--paper);
+    background:rgba(34,31,26,.72);
+    padding:2px 6px;
+    letter-spacing:.03em;
+  }
+  .frame .placeholder-label{ font-size:12px; }
+  @media (max-width:900px){
+    .sheet{ grid-template-columns:repeat(2, 1fr); }
+  }
+  @media (max-width:480px){
+    .sheet{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Design: editorial grid ---------- */
+  .design-grid{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    grid-auto-rows:180px;
+    gap:20px;
+  }
+  .piece{
+    position:relative;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    overflow:hidden;
+    grid-column:span 3;
+    grid-row:span 2;
+  }
+  .piece.wide{ grid-column:span 4; }
+  .piece.tall{ grid-row:span 3; }
+  .piece.narrow{ grid-column:span 2; }
+  .piece img{ width:100%; height:100%; object-fit:cover; }
+  .piece figcaption{
+    position:absolute;
+    left:14px; bottom:12px;
+    font-size:14px;
+    color:var(--ink);
+    background:rgba(237,234,227,.88);
+    padding:4px 10px;
+    margin:0;
+  }
+  @media (max-width:900px){
+    .design-grid{ grid-template-columns:repeat(2, 1fr); grid-auto-rows:220px; }
+    .piece, .piece.wide, .piece.narrow{ grid-column:span 2; grid-row:span 2; }
+  }
+
+  /* ---------- Contact / footer ---------- */
+  #contact{
+    border-bottom:none;
+    background:var(--ink);
+    color:var(--paper);
+  }
+  #contact h2{ color:var(--paper); font-size:clamp(30px,5vw,44px); max-width:14ch; }
+  .contact-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:32px;
+    margin-top:48px;
+  }
+  .contact-links{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    font-size:16px;
+  }
+  .contact-links a{ text-decoration:none; border-bottom:1px solid rgba(237,234,227,.3); width:fit-content; padding-bottom:2px; }
+  .contact-links a:hover{ border-color:var(--accent); }
+  .footer-note{
+    font-size:13px;
+    color:#a39d90;
+    max-width:32ch;
+  }
+</style>
+</head>
+<body>
+
+  <header class="nav">
+    <a href="#hero" class="mark">Rachel</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#photography">Photography</a></li>
+      <li><a href="#design">Design</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </header>
+
+  <section id="hero">
+    <div class="eyebrow">Candidate for Media Chair, SOM Class Council</div>
+    <h1>Rachel<br>Makes Things<br>Worth Looking At</h1>
+    <p class="tagline">Photography, graphic design, and a genuine belief that our class deserves media that actually looks good. This is a running record of the work.</p>
+    <div class="scroll-cue">Scroll ↓</div>
+  </section>
+
+  <section id="about">
+    <div class="statement">
+      <h2 style="margin-bottom:24px;">About</h2>
+      <p>I'm an M1 who's spent years behind a camera and a design program before medicine ever entered the picture. I care about how things look because how things look is how people feel invited in.</p>
+      <p>As Media Chair, I'd bring that same eye to our class's socials, event graphics, and yearbook — consistent, considered, and actually fun to look at.</p>
+    </div>
+    <div class="portrait">
+      <img src="images/portrait.jpg" alt="Portrait of Rachel" onerror="this.style.display='none'">
+      <div class="placeholder-label">Replace with images/portrait.jpg</div>
+    </div>
+  </section>
+
+  <section id="photography">
+    <div class="section-head">
+      <h2>Photography</h2>
+      <div class="count">Contact sheet, 01–08</div>
+    </div>
+    <div class="sheet" id="photo-sheet"></div>
+  </section>
+
+  <section id="design">
+    <div class="section-head">
+      <h2>Graphic Design</h2>
+      <div class="count">Selected work</div>
+    </div>
+    <div class="design-grid" id="design-grid"></div>
+  </section>
+
+  <section id="contact">
+    <h2>Let's make our class's media something people actually want to see.</h2>
+    <div class="contact-row">
+      <div class="contact-links">
+        <a href="mailto:you@siumed.edu">you@siumed.edu</a>
+        <a href="#" target="_blank">Instagram</a>
+        <a href="#" target="_blank">Behance / portfolio</a>
+      </div>
+      <div class="footer-note">Rachel — M1, SIU School of Medicine. Built for the Class Council Media Chair campaign.</div>
+    </div>
+  </section>
+
+<script>
+  // ---- Photography contact sheet ----
+  // To add photos: drop files into the images/ folder named photo-01.jpg, photo-02.jpg, etc.
+  // and they'll appear automatically. Missing files just show a soft placeholder block.
+  const PHOTO_COUNT = 8;
+  const sheet = document.getElementById('photo-sheet');
+  for (let i = 1; i <= PHOTO_COUNT; i++){
+    const num = String(i).padStart(2, '0');
+    const frame = document.createElement('div');
+    frame.className = 'frame';
+    frame.innerHTML = `
+      <img src="images/photo-${num}.jpg" alt="Photograph ${num}" loading="lazy"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder-label" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center;">
+        images/photo-${num}.jpg
+      </div>
+      <span class="frame-index">${num}</span>
+    `;
+    sheet.appendChild(frame);
+  }
+
+  // ---- Design grid ----
+  // Edit this array to add/remove/relabel design pieces.
+  // "size" controls the tile shape: normal, wide, tall, or narrow.
+  const designPieces = [
+    { file: 'design-01.jpg', title: 'Event poster',      size: 'wide'   },
+    { file: 'design-02.jpg', title: 'Instagram set',      size: 'normal' },
+    { file: 'design-03.jpg', title: 'Logo concept',       size: 'narrow' },
+    { file: 'design-04.jpg', title: 'Yearbook spread',    size: 'tall'   },
+    { file: 'design-05.jpg', title: 'Merch design',       size: 'normal' },
+    { file: 'design-06.jpg', title: 'Newsletter layout',  size: 'wide'   },
+  ];
+  const grid = document.getElementById('design-grid');
+  designPieces.forEach(p => {
+    const fig = document.createElement('figure');
+    fig.className = `piece ${p.size !== 'normal' ? p.size : ''}`.trim();
+    fig.innerHTML = `
+      <img src="images/${p.file}" alt="${p.title}" loading="lazy"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder-label" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center;">
+        images/${p.file}
+      </div>
+      <figcaption>${p.title}</figcaption>
+    `;
+    grid.appendChild(fig);
+  });
+</script>
+
+</body>
+</html>
