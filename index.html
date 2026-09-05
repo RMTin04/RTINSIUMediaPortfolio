@@ -171,24 +171,25 @@
     color:var(--grey);
   }
 
-  /* ---------- Photography: contact sheet ---------- */
+    /* ---------- Photography: contact sheet ---------- */
   #photography{ background:var(--paper-2); }
   .sheet{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    gap:2px;
+    column-count:4;
+    column-gap:2px;
     background:var(--ink);
     border:2px solid var(--ink);
   }
   .frame{
     position:relative;
-    aspect-ratio:3/2;
+    break-inside:avoid;
+    margin-bottom:2px;
     background:#d8d3c6;
     overflow:hidden;
   }
   .frame img{
-    width:100%; height:100%;
-    object-fit:cover;
+    width:100%;
+    height:auto;
+    display:block;
   }
   .frame .frame-index{
     position:absolute;
@@ -199,33 +200,40 @@
     padding:2px 6px;
     letter-spacing:.03em;
   }
-  .frame .placeholder-label{ font-size:12px; }
+  .frame .placeholder-label{
+    position:static;
+    display:none;
+    min-height:220px;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    font-size:12px;
+  }
   @media (max-width:900px){
-    .sheet{ grid-template-columns:repeat(2, 1fr); }
+    .sheet{ column-count:2; }
   }
   @media (max-width:480px){
-    .sheet{ grid-template-columns:1fr; }
+    .sheet{ column-count:1; }
   }
 
   /* ---------- Design: editorial grid ---------- */
   .design-grid{
-    display:grid;
-    grid-template-columns:repeat(6, 1fr);
-    grid-auto-rows:180px;
-    gap:20px;
+    column-count:3;
+    column-gap:20px;
   }
   .piece{
     position:relative;
+    break-inside:avoid;
+    margin-bottom:20px;
     background:var(--paper-2);
     border:1px solid var(--line);
     overflow:hidden;
-    grid-column:span 3;
-    grid-row:span 2;
   }
-  .piece.wide{ grid-column:span 4; }
-  .piece.tall{ grid-row:span 3; }
-  .piece.narrow{ grid-column:span 2; }
-  .piece img{ width:100%; height:100%; object-fit:cover; }
+  .piece img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
   .piece figcaption{
     position:absolute;
     left:14px; bottom:12px;
@@ -235,9 +243,22 @@
     padding:4px 10px;
     margin:0;
   }
+  .piece .placeholder-label{
+    position:static;
+    display:none;
+    min-height:200px;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    font-size:12px;
+    color:var(--grey);
+    text-align:center;
+  }
   @media (max-width:900px){
-    .design-grid{ grid-template-columns:repeat(2, 1fr); grid-auto-rows:220px; }
-    .piece, .piece.wide, .piece.narrow{ grid-column:span 2; grid-row:span 2; }
+    .design-grid{ column-count:2; }
+  }
+  @media (max-width:480px){
+    .design-grid{ column-count:1; }
   }
 
   /* ---------- Contact / footer ---------- */
@@ -341,7 +362,7 @@
     frame.innerHTML = `
       <img src="images/photo-${num}.jpg" alt="Photograph ${num}" loading="lazy"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="placeholder-label" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center;">
+      <div class="placeholder-label" style="display:none; align-items:center; justify-content:center;">
         images/photo-${num}.jpg
       </div>
       <span class="frame-index">${num}</span>
@@ -351,21 +372,21 @@
 
   // ---- Design grid ----
   const designPieces = [
-    { file: 'design-01.jpg', title: 'Event poster',      size: 'tall'   },
-    { file: 'design-02.jpg', title: 'Instagram set',      size: 'tall' },
-    { file: 'design-03.jpg', title: 'Logo concept',       size: 'narrow' },
-    { file: 'design-04.jpg', title: 'Yearbook spread',    size: 'tall'   },
-    { file: 'design-05.jpg', title: 'Merch design',       size: 'normal' },
-    { file: 'design-06.jpg', title: 'Newsletter layout',  size: 'wide'   },
+    { file: 'design-01.jpg', title: 'Event poster' },
+    { file: 'design-02.jpg', title: 'Instagram set' },
+    { file: 'design-03.jpg', title: 'Logo concept' },
+    { file: 'design-04.jpg', title: 'Yearbook spread' },
+    { file: 'design-05.jpg', title: 'Merch design' },
+    { file: 'design-06.jpg', title: 'Newsletter layout' },
   ];
   const grid = document.getElementById('design-grid');
   designPieces.forEach(p => {
     const fig = document.createElement('figure');
-    fig.className = `piece ${p.size !== 'normal' ? p.size : ''}`.trim();
+    fig.className = 'piece';
     fig.innerHTML = `
       <img src="images/${p.file}" alt="${p.title}" loading="lazy"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="placeholder-label" style="display:none; position:absolute; inset:0; align-items:center; justify-content:center;">
+      <div class="placeholder-label" style="display:none; align-items:center; justify-content:center;">
         images/${p.file}
       </div>
       <figcaption>${p.title}</figcaption>
