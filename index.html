@@ -79,12 +79,18 @@
 
   /* ---------- Hero ---------- */
   #hero{
+    position:relative;
+    overflow:hidden;
     min-height:100vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
     padding-top:80px;
     padding-bottom:80px;
+    background:
+      radial-gradient(58% 70% at 82% 8%, rgba(151,100,205,.45), transparent 60%),
+      linear-gradient(155deg, #241A33 0%, var(--ink) 45%, #14120F 100%);
+    color:var(--paper);
     opacity:0;
     transform:translateY(14px);
     animation:reveal .9s ease-out .15s forwards;
@@ -92,27 +98,54 @@
   @keyframes reveal{
     to{ opacity:1; transform:translateY(0); }
   }
+  #hero .hero-content{ position:relative; z-index:2; }
+  #hero .aperture{
+    position:absolute;
+    top:50%; right:clamp(-140px, -4vw, -40px);
+    transform:translateY(-50%);
+    width:min(56vw, 620px);
+    height:auto;
+    z-index:1;
+    opacity:.85;
+  }
   #hero .eyebrow{
-    color:var(--accent);
+    color:#C6A6EE;
     font-size:15px;
+    letter-spacing:.02em;
     margin-bottom:18px;
   }
   #hero h1{
-    font-size:clamp(52px, 11vw, 128px);
-    line-height:0.95;
+    font-size:clamp(44px, 8vw, 88px);
+    line-height:1;
     letter-spacing:-0.01em;
+    color:var(--paper);
+  }
+  #hero h2{
+    font-size:clamp(20px, 3vw, 26px);
+    font-weight:400;
+    line-height:1.35;
+    margin-top:18px;
+    color:rgba(237,234,227,.85);
   }
   #hero .tagline{
     margin-top:28px;
     max-width:520px;
     font-size:18px;
     line-height:1.6;
-    color:#4a4640;
+    color:rgba(237,234,227,.75);
   }
   #hero .scroll-cue{
     margin-top:64px;
     font-size:13px;
-    color:var(--grey);
+    color:rgba(237,234,227,.55);
+  }
+  @media (max-width:800px){
+    #hero .aperture{
+      top:auto; bottom:-60px; right:-80px;
+      transform:none;
+      width:75vw;
+      opacity:.55;
+    }
   }
 
   /* ---------- About ---------- */
@@ -313,23 +346,44 @@
   </header>
 
   <section id="hero">
-    <div class="eyebrow">Candidate for Communications &amp; Media Representative</div>
-    <h1>Hello Class of 2030!</h1>
-    <h2>Rachel Tin<br>Communications &amp; Media Representative Candidate</h2>
-    <p class="tagline">Photography, graphic design, and a belief that our class deserves media that represents us well.</p>
-    <div class="scroll-cue">Scroll ↓</div>
+    <svg class="aperture" viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <linearGradient id="apGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#C6A6EE" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="#C6A6EE" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#apGrad)" stroke-width="1.25">
+        <circle cx="100" cy="100" r="92" stroke-opacity=".5"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(0 100 100)"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(45 100 100)"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(90 100 100)"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(135 100 100)"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(180 100 100)"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(225 100 100)"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(270 100 100)"/>
+        <path d="M100,100 L100,14 L136,32 Z" transform="rotate(315 100 100)"/>
+        <circle cx="100" cy="100" r="30" stroke-opacity=".8"/>
+      </g>
+    </svg>
+    <div class="hero-content">
+      <div class="eyebrow">Candidate for Communications &amp; Media Representative</div>
+      <h1>Hello Class of 2030!</h1>
+      <h2>Rachel Tin<br>Communications &amp; Media Representative Candidate</h2>
+      <p class="tagline">Photography, graphic design, and a belief that our class deserves media that represents us well.</p>
+      <div class="scroll-cue">Scroll ↓</div>
+    </div>
   </section>
 
   <section id="about">
     <div class="statement">
       <h2 style="margin-bottom:24px;">About Me</h2>
-      <p>Hi guys! My name is Rachel Tin. I'm a fellow M1 who's spent countless hours behind a camera and design/editing softwares. I've worked as both a photographer and a graphic designer for various campus orgs and events during undergrad. I understand how branding and social media can elevate our class's presence and how important representing our image is to our futures.</p>
-      <p>As Communications &amp; Media Representative, I'd bring that experience to our class's socials, event graphics, and other forms of media — consistent, considered, and interesting to look at.</p>
-      <p style="font-size:16px"> <br>I also have a lot of screentime doomscrolling tiktok and ig so if we want to, we can keep up with the trends :D. </p>
+      <p>Hi guys! My name is Rachel Tin. I'm a fellow M1 who's spent countless hours behind a camera and design/editing softwares. I've worked as both a photographer and a graphic designer for various campus orgs during undergrad. I understand how branding and social media can elevate our class's presence and how important representing our image is to our futures.</p>
+      <p>As Communications &amp; Media Representative, I'd bring that experience to our class's socials, event graphics, and other forms of media.</p>
+      <p style="font-size:12px"> <br>I also have a lot of screentime doomscrolling tiktok and ig so if we want to, we can keep up with the trends :D. </p>
     </div>
     <div class="portrait">
       <img src="images/portrait.jpg" alt="Portrait of Rachel" data-base="portrait" onerror="tryNextExtension(this, this.dataset.base)">
-      <div class="placeholder-label">Replace with images/portrait.jpg</div>
     </div>
   </section>
 
@@ -353,11 +407,13 @@
 
     <div class="design-sub">
       <h3>Previous Work</h3>
+      <p style="margin-bottom:28px; max-width:48ch;"> IG posts for my dance team</p>
       <div class="design-grid" id="design-grid-previous"></div>
     </div>
 
     <div class="design-sub">
       <h3>Future Ideas</h3>
+      <div class="count"> Representing our class creatively and effectively </div>
       <div class="design-grid" id="design-grid-future"></div>
     </div>
   </section>
@@ -430,10 +486,10 @@
 
   // ---- Design grids ----
   const designPrevious = [
-    { file: 'design-01.jpg', title: 'Event poster' },
-    { file: 'design-02.jpg', title: 'Instagram set' },
-    { file: 'design-03.jpg', title: 'Logo concept' },
-    { file: 'design-04.jpg', title: 'Yearbook spread' },
+    { file: 'design-01.jpg', title: 'Auditions' },
+    { file: 'design-02.jpg', title: 'Submissions' },
+    { file: 'design-03.jpg', title: 'Dance Merch' },
+    { file: 'design-04.jpg', title: 'Showcase Lineup' },
   ];
   const designFuture = [
     { file: 'idea-01.jpg', title: 'LinkedIn Banner Design' },
