@@ -46,6 +46,7 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
+    background-color:var(--accent);
     padding:22px clamp(20px, 5vw, 56px);
     z-index:100;
     mix-blend-mode:difference;
@@ -273,7 +274,7 @@
 <body>
 
   <header class="nav">
-    <a href="#hero" class="mark">Rachel</a>
+    <a href="#hero" class="mark">Rachel Tin</a>
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#photography">Photography</a></li>
@@ -332,8 +333,6 @@
 
 <script>
   // ---- Photography contact sheet ----
-  // To add photos: drop files into the images/ folder named photo-01.jpg, photo-02.jpg, etc.
-  // and they'll appear automatically. Missing files just show a soft placeholder block.
   const PHOTO_COUNT = 8;
   const sheet = document.getElementById('photo-sheet');
   for (let i = 1; i <= PHOTO_COUNT; i++){
@@ -352,8 +351,6 @@
   }
 
   // ---- Design grid ----
-  // Edit this array to add/remove/relabel design pieces.
-  // "size" controls the tile shape: normal, wide, tall, or narrow.
   const designPieces = [
     { file: 'design-01.jpg', title: 'Event poster',      size: 'wide'   },
     { file: 'design-02.jpg', title: 'Instagram set',      size: 'normal' },
