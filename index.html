@@ -337,17 +337,26 @@
       <h2>Graphic Design</h2>
       <div class="count">Selected work</div>
     </div>
+
     <p style="margin-bottom:32px; max-width:48ch;">A few examples of my work in graphic design, including event posters, social media graphics, and other class-related media.</p>
-    <div class="design-grid" id="design-grid"></div>
+
+ 
+    <div class="design-sub">
+      <h3>Previous Work</h3>
+      <div class="design-grid" id="design-grid-previous"></div>
+    </div>
+ 
+    <div class="design-sub">
+      <h3>Future Ideas</h3>
+      <div class="design-grid" id="design-grid-future"></div>
+    </div>
   </section>
 
   <section id="contact">
     <h2>Let's make our class's media something people actually want to see.</h2>
     <div class="contact-row">
       <div class="contact-links">
-        <a href="mailto:you@siumed.edu">you@siumed.edu</a>
-        <a href="#" target="_blank">Instagram</a>
-        <a href="#" target="_blank">Behance / portfolio</a>
+        <a href="mailto:rtin91@siumed.edu">rtin91@siumed.edu</a>
       </div>
       <div class="footer-note">Rachel — M1, SIU School of Medicine. Built for the Communications & Media Representative.</div>
     </div>
@@ -372,46 +381,67 @@
   }
  
   // ---- Photography contact sheet ----
-  const PHOTO_COUNT = 8;
+  const photos = [
+    { file: 'photo-01' },
+    { file: 'photo-02' },
+    { file: 'photo-03' },
+    { file: 'photo-04' },
+    { file: 'photo-05' },
+    { file: 'photo-06' },
+    { file: 'photo-07' },
+    { file: 'photo-08' },
+  ];
   const sheet = document.getElementById('photo-sheet');
-  for (let i = 1; i <= PHOTO_COUNT; i++){
-    const num = String(i).padStart(2, '0');
+  document.getElementById('photo-count').textContent =
+    `Contact sheet, 01–${String(photos.length).padStart(2, '0')}`;
+  photos.forEach((p, i) => {
+    const num = String(i + 1).padStart(2, '0');
     const frame = document.createElement('div');
     frame.className = 'frame';
     frame.innerHTML = `
-      <img src="images/photo-${num}.jpg" alt="Photograph ${num}" loading="lazy"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <img alt="Photograph ${num}" loading="lazy" data-base="${p.file}"
+           onerror="tryNextExtension(this, this.dataset.base)">
       <div class="placeholder-label" style="display:none; align-items:center; justify-content:center;">
-        images/photo-${num}.jpg
+        images/${p.file}.jpg
       </div>
       <span class="frame-index">${num}</span>
     `;
     sheet.appendChild(frame);
-  }
-
-  // ---- Design grid ----
-  const designPieces = [
-    { file: 'design-01.jpg', title: 'Event poster' },
-    { file: 'design-02.jpg', title: 'Instagram set' },
-    { file: 'design-03.jpg', title: 'Logo concept' },
-    { file: 'design-04.jpg', title: 'Yearbook spread' },
-    { file: 'design-05.jpg', title: 'Merch concepts' },
-    { file: 'design-06.jpg', title: 'Newsletter layout' },
-  ];
-  const grid = document.getElementById('design-grid');
-  designPieces.forEach(p => {
-    const fig = document.createElement('figure');
-    fig.className = 'piece';
-    fig.innerHTML = `
-      <img src="images/${p.file}" alt="${p.title}" loading="lazy"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="placeholder-label" style="display:none; align-items:center; justify-content:center;">
-        images/${p.file}
-      </div>
-      <figcaption>${p.title}</figcaption>
-    `;
-    grid.appendChild(fig);
+    frame.querySelector('img').src = `images/${p.file}.${EXTENSIONS[0]}`;
   });
+
+  // ---- Design grids ----
+  // Edit either list to add/remove/relabel pieces — each keeps its own natural size.
+  const designPrevious = [
+    { file: 'design-01', title: 'Event poster' },
+    { file: 'design-02', title: 'Instagram set' },
+    { file: 'design-03', title: 'Logo concept' },
+    { file: 'design-04', title: 'Yearbook spread' },
+  ];
+  const designFuture = [
+    { file: 'idea-01', title: 'Redesigned class newsletter' },
+    { file: 'idea-02', title: 'Merch concept' },
+  ];
+ 
+  function renderDesignGrid(containerId, pieces){
+    const grid = document.getElementById(containerId);
+    pieces.forEach(p => {
+      const fig = document.createElement('figure');
+      fig.className = 'piece';
+      fig.innerHTML = `
+        <img alt="${p.title}" loading="lazy" data-base="${p.file}"
+             onerror="tryNextExtension(this, this.dataset.base)">
+        <div class="placeholder-label" style="display:none; align-items:center; justify-content:center;">
+          images/${p.file}.jpg
+        </div>
+        <figcaption>${p.title}</figcaption>
+      `;
+      grid.appendChild(fig);
+      fig.querySelector('img').src = `images/${p.file}.${EXTENSIONS[0]}`;
+    });
+  }
+  renderDesignGrid('design-grid-previous', designPrevious);
+  renderDesignGrid('design-grid-future', designFuture);
 </script>
 
 </body>
